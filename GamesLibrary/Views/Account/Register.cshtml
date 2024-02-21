@@ -1,0 +1,35 @@
+﻿@model GamesLibrary.Models.Account.RegistrationViewModel;
+@{
+	ViewData["Title"] = "Register";
+}
+
+<h2>New User Registration</h2>
+<form method="post" asp-controller="Account" asp-action="Register">
+	<div asp-validation-summary="ModelOnly"></div>
+	<div>
+		<label asp-for="Nickname"></label><br />
+		<input asp-for="Nickname" />
+		<span asp-validation-for="Nickname"></span>
+	</div>
+	<div>
+		<label asp-for="Email"></label><br />
+		<input asp-for="Email" />
+		<span asp-validation-for="Email"></span>
+	</div>
+	<div>
+		<label asp-for="Password"></label><br />
+		<input asp-for="Password" />
+		<span asp-validation-for="Password"></span>
+	</div>
+	<div>
+		<label asp-for="ConfirmPassword"></label><br />
+		<input asp-for="ConfirmPassword" />
+		<span asp-validation-for="ConfirmPassword"></span>
+	</div>
+	<div class="mt-4">
+		<input type="submit" value="Register"/>
+	</div>
+
+
+</form>
+

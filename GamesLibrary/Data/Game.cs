@@ -2,7 +2,7 @@
 
 namespace GamesLibrary.Data
 {
-	public class Games
+	public class Game
 	{
 		public int Id { get; set; }
 		[Required]
@@ -16,7 +16,7 @@ namespace GamesLibrary.Data
 		public DataType ReleaseDate { get; set; } = default!;
 		public decimal? AverageRate { get; set; }
 		public int RateCount { get; set; } = 0;
-		public List<Genres> Genres { get; set; } = default!;
+		public List<Genre> Genres { get; set; } = default!;
 		public List<User> Recomendation { get; set; } = default!;
 	}
 	public class VideoLinks

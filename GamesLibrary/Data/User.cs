@@ -5,7 +5,7 @@ namespace GamesLibrary.Data
 {
     public class User : IdentityUser
     {
-        public List<Games> Recomendations { get; set; } = default!;
+        public List<Game> Recomendations { get; set; } = default!;
         public List<UserGamesLibrary> GamesLibrary { get; set; } = default!;
     }
 }

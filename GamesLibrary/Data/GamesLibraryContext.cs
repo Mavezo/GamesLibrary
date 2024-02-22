@@ -6,8 +6,8 @@ namespace GamesLibrary.Data
 {
     public class GamesLibraryContext : IdentityDbContext<User>
     {
-        public DbSet<Games> Games { get; set; } = default!;
-        public DbSet<Genres> Genres { get; set; } = default!;
+        public DbSet<Game> Games { get; set; } = default!;
+        public DbSet<Genre> Genres { get; set; } = default!;
         public DbSet<UserGamesLibrary> UserGamesLiked { get; set; } = default!;
 
         public GamesLibraryContext(DbContextOptions options) : base(options)

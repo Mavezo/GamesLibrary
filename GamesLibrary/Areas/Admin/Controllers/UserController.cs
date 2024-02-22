@@ -14,11 +14,11 @@ namespace GamesLibrary.Areas.Admin.Controllers
 	public class UserController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
-        private readonly SignInManager<Users> signInManager;
-        private readonly UserManager<Users> userManager;
+        private readonly SignInManager<User> signInManager;
+        private readonly UserManager<User> userManager;
         private readonly GamesLibraryContext context;
 
-        public UserController(RoleManager<IdentityRole> roleManager, SignInManager<Users> signInManager, UserManager<Users> userManager, GamesLibraryContext libraryContext)
+        public UserController(RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager, UserManager<User> userManager, GamesLibraryContext libraryContext)
         {
             this.roleManager = roleManager;
             this.signInManager = signInManager;
@@ -106,7 +106,7 @@ namespace GamesLibrary.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                Users user = await userManager.FindByIdAsync(id);
+                User user = await userManager.FindByIdAsync(id);
                 if (user is not null)
                 {
                     context.Users.Remove(user);
@@ -129,7 +129,7 @@ namespace GamesLibrary.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                Users user = new Users() { UserName = vM.UserName, Email = vM.Email };
+                User user = new User() { UserName = vM.UserName, Email = vM.Email };
                 var result = await userManager.CreateAsync(user, vM.Password);
                 if (result.Succeeded)
                 {

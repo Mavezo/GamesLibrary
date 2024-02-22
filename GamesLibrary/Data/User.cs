@@ -3,9 +3,9 @@ using System.Net;
 
 namespace GamesLibrary.Data
 {
-    public class Users : IdentityUser
+    public class User : IdentityUser
     {
-        public List<UserGamesRecomendation> Recomendations { get; set; } = default!;
+        public List<Games> Recomendations { get; set; } = default!;
         public List<UserGamesLibrary> GamesLibrary { get; set; } = default!;
     }
 }

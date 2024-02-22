@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public int? Rate { get; set; }
-        public Users User { get; set; } = default!;
+        public User User { get; set; } = default!;
         public Games Game { get; set; } = default!;
          
     }

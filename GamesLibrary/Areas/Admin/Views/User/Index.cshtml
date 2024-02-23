@@ -36,7 +36,7 @@
 					}
 				</td>
 				<td>
-					<a asp-action="ChangeRoles" asp-route-id="@user.Id" class="btn btn-primary">Change Roles</a>
+					<a asp-action="EditRole" asp-controller="User" asp-area="Admin" asp-route-id="@user.Id" class="btn btn-primary">Change Roles</a>
 				</td>
 				<td>
 					<form asp-action="DeleteUser" method="post">

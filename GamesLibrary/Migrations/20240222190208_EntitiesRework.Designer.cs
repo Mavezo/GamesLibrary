@@ -4,6 +4,7 @@ using GamesLibrary.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GamesLibrary.Migrations
 {
     [DbContext(typeof(GamesLibraryContext))]
-    partial class GamesLibraryContextModelSnapshot : ModelSnapshot
+    [Migration("20240222190208_EntitiesRework")]
+    partial class EntitiesRework
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -236,30 +238,6 @@ namespace GamesLibrary.Migrations
                     b.ToTable("UserGamesLiked");
                 });
 
-            modelBuilder.Entity("GamesLibrary.Data.UserGamesRecomendation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("RecomendedGameId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RecomendedGameId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserGamesRecomendation");
-                });
-
             modelBuilder.Entity("GamesLibrary.Data.VideoLink", b =>
                 {
                     b.Property<int>("Id")
@@ -280,6 +258,21 @@ namespace GamesLibrary.Migrations
                     b.HasIndex("GameId");
 
                     b.ToTable("VideoLink");
+                });
+
+            modelBuilder.Entity("GameUser", b =>
+                {
+                    b.Property<string>("RecomendationId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("RecomendationsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RecomendationId", "RecomendationsId");
+
+                    b.HasIndex("RecomendationsId");
+
+                    b.ToTable("GameUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -469,30 +462,26 @@ namespace GamesLibrary.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("GamesLibrary.Data.UserGamesRecomendation", b =>
-                {
-                    b.HasOne("GamesLibrary.Data.Game", "RecomendedGame")
-                        .WithMany("Recomendation")
-                        .HasForeignKey("RecomendedGameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GamesLibrary.Data.User", "User")
-                        .WithMany("Recomendations")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("RecomendedGame");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("GamesLibrary.Data.VideoLink", b =>
                 {
                     b.HasOne("GamesLibrary.Data.Game", null)
                         .WithMany("VideoLinks")
                         .HasForeignKey("GameId");
+                });
+
+            modelBuilder.Entity("GameUser", b =>
+                {
+                    b.HasOne("GamesLibrary.Data.User", null)
+                        .WithMany()
+                        .HasForeignKey("RecomendationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GamesLibrary.Data.Game", null)
+                        .WithMany()
+                        .HasForeignKey("RecomendationsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -548,8 +537,6 @@ namespace GamesLibrary.Migrations
 
             modelBuilder.Entity("GamesLibrary.Data.Game", b =>
                 {
-                    b.Navigation("Recomendation");
-
                     b.Navigation("ScreenshotLinks");
 
                     b.Navigation("VideoLinks");
@@ -558,8 +545,6 @@ namespace GamesLibrary.Migrations
             modelBuilder.Entity("GamesLibrary.Data.User", b =>
                 {
                     b.Navigation("GamesLibrary");
-
-                    b.Navigation("Recomendations");
                 });
 #pragma warning restore 612, 618
         }

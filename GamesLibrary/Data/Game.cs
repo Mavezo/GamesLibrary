@@ -17,7 +17,7 @@ namespace GamesLibrary.Data
 		public decimal? AverageRate { get; set; }
 		public int RateCount { get; set; } = 0;
 		public List<Genre> Genres { get; set; } = default!;
-		public List<User> Recomendation { get; set; } = default!;
+		public List<UserGamesRecomendation> Recomendation { get; set; } = default!;
 	}
 	public class VideoLink
 	{

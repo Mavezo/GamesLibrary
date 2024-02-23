@@ -4,6 +4,7 @@ using GamesLibrary.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GamesLibrary.Migrations
 {
     [DbContext(typeof(GamesLibraryContext))]
-    partial class GamesLibraryContextModelSnapshot : ModelSnapshot
+    [Migration("20240222204725_UpgradeEntities3")]
+    partial class UpgradeEntities3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

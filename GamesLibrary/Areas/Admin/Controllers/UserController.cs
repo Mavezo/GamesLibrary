@@ -145,5 +145,25 @@ namespace GamesLibrary.Areas.Admin.Controllers
             vM.AllRoles = context.Roles.ToList();
             return View(vM);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ChangeRole(string id)
+        {
+            User user = await userManager.FindByIdAsync(id);
+            ChangeRolesModel vM = new ChangeRolesModel()
+            {
+                Id = id,
+                AllRoles = roleManager.Roles.Select(t=>t.Name).ToList(),
+                CheckedRoles = await userManager.GetRolesAsync(user)
+            };
+            return View(vM);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangeRole(ChangeRolesModel vM)
+        {
+
+        }
+
     }
 }

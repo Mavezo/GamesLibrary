@@ -1,9 +1,19 @@
-﻿@{
-	ViewData["Title"] = "Change Role";
+﻿@using GamesLibrary.Areas.Admin.Models.User
+@model ChangeRoleViewModel;
+
+@{
+	ViewData["Title"] = "Change Roles";
+
 }
-
-<form>
-
-
-
+<h2>@ViewData["Nickname"] (id = @Model.Id)</h2>
+<form method="post" asp-controller="User" asp-action="ChangeRole">
+	<div asp-validation-summary="ModelOnly"></div>
+	<input type="hidden" asp-for="Id"/>
+	<div>
+		<label asp-for="UserRoles"></label>
+		<select class="form-select w-50" asp-for="UserRoles" multiple aria-label="multiple select" asp-items="@new MultiSelectList(Model.AllRoles, Model.UserRoles)">
+		</select>
+	</div>
+	<input type="submit" value="Change" />
+		
 </form>

@@ -9,10 +9,12 @@ namespace GamesLibrary.Data
 		public string Name { get; set; } = default!;
 		public string Description { get; set; } = default!;
 		public int Price { get; set; }
+		[Display(Name = "Link to the Poster")]
 		public string PosterImagePath { get; set; } = default!;
-		public List<VideoLink> VideoLinks { get; set; } = default!;
-		public List<ScreenshotLink> ScreenshotLinks { get; set; } = default!;
+		public List<VideoLink>? VideoLinks { get; set; } = default!;
+		public List<ScreenshotLink>? ScreenshotLinks { get; set; } = default!;
 		public List<Developer> Developers { get; set; } = default!;
+		[Display(Name = "Release Date")]
 		public DataType ReleaseDate { get; set; } = default!;
 		public decimal? AverageRate { get; set; }
 		public int RateCount { get; set; } = 0;

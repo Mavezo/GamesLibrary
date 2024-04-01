@@ -121,6 +121,28 @@ namespace GamesLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genres");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            GenreName = "Action"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            GenreName = "Adventure"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            GenreName = "RPG"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            GenreName = "MMORPG"
+                        });
                 });
 
             modelBuilder.Entity("GamesLibrary.Data.ScreenshotLink", b =>

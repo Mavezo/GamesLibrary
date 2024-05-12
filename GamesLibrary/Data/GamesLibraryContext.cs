@@ -8,12 +8,21 @@ namespace GamesLibrary.Data
 	{
 		public DbSet<Game> Games { get; set; } = default!;
 		public DbSet<Genre> Genres { get; set; } = default!;
+		public DbSet<Developer> Developers { get; set; } = default!;
+		public DbSet<ScreenshotLink> Screenshots { get; set; } = default!;
+		public DbSet<VideoLink> Videos { get; set; } = default!;
 		public DbSet<UserGamesLibrary> UserGamesLiked { get; set; } = default!;
 
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
 			base.OnModelCreating(builder);
+
+			builder.Entity<Developer>().HasData(
+				new Developer { Id = 1, Name = "HoYoverse" },
+				new Developer { Id = 2, Name = "Mihoyo" }
+				
+				);
 
 			builder.Entity<Genre>().HasData(
 					new Genre { Id = 1, GenreName = "Action"},
@@ -26,5 +35,7 @@ namespace GamesLibrary.Data
 		{
 			//Database.EnsureCreated();
 		}
+			
+
 	}
 }

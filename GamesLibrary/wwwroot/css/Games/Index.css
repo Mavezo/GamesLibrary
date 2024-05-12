@@ -1,0 +1,7 @@
+﻿body {
+}
+
+img {
+    width: 600px;
+    contain-intrinsic-size: auto 500px;
+}

@@ -49,17 +49,31 @@ namespace GamesLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Developers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Developers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Games",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    YoutubeURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Rate = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    ViewsCount = table.Column<int>(type: "int", nullable: false)
+                    Price = table.Column<int>(type: "int", nullable: false),
+                    PosterImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    AverageRate = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    RateCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -186,28 +200,46 @@ namespace GamesLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserGameRecomendations",
+                name: "DeveloperGame",
+                columns: table => new
+                {
+                    DevelopersId = table.Column<int>(type: "int", nullable: false),
+                    GamesId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeveloperGame", x => new { x.DevelopersId, x.GamesId });
+                    table.ForeignKey(
+                        name: "FK_DeveloperGame_Developers_DevelopersId",
+                        column: x => x.DevelopersId,
+                        principalTable: "Developers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DeveloperGame_Games_GamesId",
+                        column: x => x.GamesId,
+                        principalTable: "Games",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Screenshots",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    GameId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    Link = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    GameId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserGameRecomendations", x => x.Id);
+                    table.PrimaryKey("PK_Screenshots", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserGameRecomendations_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_UserGameRecomendations_Games_GameId",
+                        name: "FK_Screenshots_Games_GameId",
                         column: x => x.GameId,
                         principalTable: "Games",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -237,7 +269,52 @@ namespace GamesLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GamesGenres",
+                name: "UserGamesRecomendation",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RecomendedGameId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserGamesRecomendation", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserGamesRecomendation_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserGamesRecomendation_Games_RecomendedGameId",
+                        column: x => x.RecomendedGameId,
+                        principalTable: "Games",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Videos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Link = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    GameId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Videos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Videos_Games_GameId",
+                        column: x => x.GameId,
+                        principalTable: "Games",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GameGenre",
                 columns: table => new
                 {
                     GamesId = table.Column<int>(type: "int", nullable: false),
@@ -245,19 +322,39 @@ namespace GamesLibrary.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GamesGenres", x => new { x.GamesId, x.GenresId });
+                    table.PrimaryKey("PK_GameGenre", x => new { x.GamesId, x.GenresId });
                     table.ForeignKey(
-                        name: "FK_GamesGenres_Games_GamesId",
+                        name: "FK_GameGenre_Games_GamesId",
                         column: x => x.GamesId,
                         principalTable: "Games",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_GamesGenres_Genres_GenresId",
+                        name: "FK_GameGenre_Genres_GenresId",
                         column: x => x.GenresId,
                         principalTable: "Genres",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Developers",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "HoYoverse" },
+                    { 2, "Mihoyo" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Genres",
+                columns: new[] { "Id", "GenreName" },
+                values: new object[,]
+                {
+                    { 1, "Action" },
+                    { 2, "Adventure" },
+                    { 3, "RPG" },
+                    { 4, "MMORPG" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -300,19 +397,19 @@ namespace GamesLibrary.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GamesGenres_GenresId",
-                table: "GamesGenres",
+                name: "IX_DeveloperGame_GamesId",
+                table: "DeveloperGame",
+                column: "GamesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GameGenre_GenresId",
+                table: "GameGenre",
                 column: "GenresId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserGameRecomendations_GameId",
-                table: "UserGameRecomendations",
+                name: "IX_Screenshots_GameId",
+                table: "Screenshots",
                 column: "GameId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserGameRecomendations_UserId",
-                table: "UserGameRecomendations",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserGamesLiked_GameId",
@@ -323,6 +420,21 @@ namespace GamesLibrary.Migrations
                 name: "IX_UserGamesLiked_UserId",
                 table: "UserGamesLiked",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserGamesRecomendation_RecomendedGameId",
+                table: "UserGamesRecomendation",
+                column: "RecomendedGameId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserGamesRecomendation_UserId",
+                table: "UserGamesRecomendation",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Videos_GameId",
+                table: "Videos",
+                column: "GameId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -343,16 +455,28 @@ namespace GamesLibrary.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "GamesGenres");
+                name: "DeveloperGame");
 
             migrationBuilder.DropTable(
-                name: "UserGameRecomendations");
+                name: "GameGenre");
+
+            migrationBuilder.DropTable(
+                name: "Screenshots");
 
             migrationBuilder.DropTable(
                 name: "UserGamesLiked");
 
             migrationBuilder.DropTable(
+                name: "UserGamesRecomendation");
+
+            migrationBuilder.DropTable(
+                name: "Videos");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Developers");
 
             migrationBuilder.DropTable(
                 name: "Genres");

@@ -1,4 +1,4 @@
-﻿@using GamesLibrary.Areas.Admin.Models.Games
+﻿@using GamesLibrary.Areas.Library.Models.Games
 @using GamesLibrary.Data
 @model CreateViewModel
 
@@ -9,7 +9,6 @@
 	i::before, i {
 		color: black;
 	}
-
 
 </style>
 
@@ -22,6 +21,8 @@
 	<div class="col-md-4">
 		<form asp-action="Create">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<input type="hidden" asp-for="AllGenres" />
+			<input type="hidden" asp-for="AllDevelopers" />
 			<div class="form-group">
 				<label asp-for="Game.Name" class="control-label"></label>
 				<input asp-for="Game.Name" class="form-control" />
@@ -63,14 +64,40 @@
 				@Html.ListBoxFor(m => m.GenreIds, Model.AllGenres, new { @class = "listbox", @multiple = "multiple" })
 			</div>
 
+			<div class="form-group my-3">
+				<label asp-for="Game.Developers" class="contol-label"></label>
+				@Html.ListBoxFor(m => m.DevelopersIds, Model.AllDevelopers, new { @class = "listbox", @multiple = "multiple" })
+			</div>
+
 			<div class="form-group">
 				<label class="mb-2" asp-for="ScreenshotLinks">Enter links to the screenshots</label><br />
 				<button type="button" class="btn btn-outline-success" onclick="newScreenField()">New field</button>
 				<button type="button" class="btn btn-outline-danger" onclick="removeScreenField()">Remove field</button>
-				<div class="links mt-3" id="screenLinks">
-					<input type="text" asp-for="ScreenshotLinks" class="screenshots" placeholder="link" />
+				<div class="links mt-3">
+					<ol id="screenLinks">
+						<li>
+							<input type="text" asp-for="ScreenshotLinks" placeholder="Link to the screenshot" />
+
+						</li>
+					</ol>
 				</div>
 			</div>
+
+			<div class="form-group">
+				<label class="mb-2" asp-for="VideoLinks">Enter links to the videos</label><br />
+				<button type="button" class="btn btn-outline-success" onclick="newVideoField()">New field</button>
+				<button type="button" class="btn btn-outline-danger" onclick="removeVideoField()">Remove field</button>
+				<div class="links mt-3">
+					<ol id="videoLinks">
+						<li>
+							<input type="text" asp-for="VideoLinks" placeholder="Link to the video" />
+						</li>
+					</ol>
+				</div>
+			</div>
+
+
+
 
 
 			<div class="form-group mt-4">
@@ -102,16 +129,25 @@
 		});
 
 		function newScreenField() {
-			$("#screenLinks").append("<input type='text' class='screenshots' placeholder='link' data-val='true' data-val-required='The ScreenshotLinks field is required.' id='ScreenshotLinks' name='ScreenshotLinks' value=''>");
+			$("#screenLinks").append("<li><input type='text' placeholder='Link to the screenshot' data-val='true' data-val-required='The ScreenshotLinks field is required.' id='ScreenshotLinks' name='ScreenshotLinks' value=''></li>");
 		}
 
 		function removeScreenField() {
 			if ($("#screenLinks").children().length != 1) {
 				$("#screenLinks").children().last().remove();
 			}
-
 		}
 
+
+		function newVideoField() {
+			$("#videoLinks").append("<li><input type='text' placeholder='Link to the video' data-val='true' data-val-required='The VideoLinks field is required.' id='VideoLinks' name='VideoLinks' value=''></li>");
+		}
+
+		function removeVideoField() {
+			if ($("#videoLinks").children().length != 1) {
+				$("#videoLinks").children().last().remove();
+			}
+		}
 
 
 	</script>

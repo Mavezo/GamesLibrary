@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GamesLibrary.Migrations
 {
     [DbContext(typeof(GamesLibraryContext))]
-    [Migration("20240313140618_Seed")]
-    partial class Seed
+    [Migration("20240507223421_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -68,7 +68,19 @@ namespace GamesLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Developer");
+                    b.ToTable("Developers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "HoYoverse"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Mihoyo"
+                        });
                 });
 
             modelBuilder.Entity("GamesLibrary.Data.Game", b =>
@@ -100,8 +112,8 @@ namespace GamesLibrary.Migrations
                     b.Property<int>("RateCount")
                         .HasColumnType("int");
 
-                    b.Property<int>("ReleaseDate")
-                        .HasColumnType("int");
+                    b.Property<DateTime?>("ReleaseDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -166,7 +178,7 @@ namespace GamesLibrary.Migrations
 
                     b.HasIndex("GameId");
 
-                    b.ToTable("ScreenshotLink");
+                    b.ToTable("Screenshots");
                 });
 
             modelBuilder.Entity("GamesLibrary.Data.User", b =>
@@ -303,7 +315,7 @@ namespace GamesLibrary.Migrations
 
                     b.HasIndex("GameId");
 
-                    b.ToTable("VideoLink");
+                    b.ToTable("Videos");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

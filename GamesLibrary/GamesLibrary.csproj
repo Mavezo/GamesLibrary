@@ -31,10 +31,11 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Library\Controllers\" />
     <Folder Include="Areas\Library\Data\" />
-    <Folder Include="Areas\Library\Models\" />
-    <Folder Include="Areas\Library\Views\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\css\Games\Index.css" />
   </ItemGroup>
 
 </Project>

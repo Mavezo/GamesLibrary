@@ -1,0 +1,109 @@
+﻿@model GamesLibrary.Data.Game
+
+@{
+	ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+	<h4>Game</h4>
+	<hr />
+	<dl class="row">
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.PosterImagePath)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.PosterImagePath)
+			<img src="@Model.PosterImagePath" alt="PosterPath" style="width: auto; height: 300px" />
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Name)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Name)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Description)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Description)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Price)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Price)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.ReleaseDate)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.ReleaseDate)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.AverageRate)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.AverageRate)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.RateCount)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.RateCount)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Developers)
+		</dt>
+		<dd class="col-sm-10">
+			@foreach (var dev in Model.Developers)
+			{
+				//СДЕЛАТЬ ССЫЛКУ НА РАЗРАБА
+				<p>@dev.Name</p>
+			}
+		</dd>
+
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Genres)
+		</dt>
+		<dd class="col-sm-10">
+			@foreach (var genre in Model.Genres)
+			{
+				//СДЕЛАТЬ ССЫЛКУ НА РАЗРАБА
+				<p>@genre.GenreName</p>
+			}
+		</dd>
+		<hr />
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.ScreenshotLinks)
+		</dt>
+		<dd class="col-sm-10">
+			<div class="d-flex flex-wrap">
+				@foreach (var screenshot in Model.ScreenshotLinks)
+				{
+					<img src="@screenshot.Link" class="mx-1 my-1" style="height: 300px; width: auto;" alt="Screenshot (@screenshot.Id)" />
+				}
+			</div>
+		</dd>
+		<hr />
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.VideoLinks)
+		</dt>
+		<dd class="col-sm-10">
+			<div class="d-flex flex-wrap">
+				@foreach (var video in Model.VideoLinks)
+				{
+					<video class="mx-1 my-1" style="height: 300px; width: auto;" controls="controls">
+						<source src="@video.Link"type="video/mp4" />
+					</video>
+				}
+			</div>
+		</dd>
+
+	</dl>
+</div>
+<div>
+	<a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+	<a asp-action="Index">Back to List</a>
+</div>

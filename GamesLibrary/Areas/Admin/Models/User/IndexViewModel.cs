@@ -5,7 +5,7 @@ namespace GamesLibrary.Areas.Admin.Models.User
 {
     public class IndexViewModel
     {
-        public UserManager<Users> UserManager { get; set; }
+        public UserManager<Data.User> UserManager { get; set; }
         public GamesLibraryContext Context { get; set; }
     }
 }

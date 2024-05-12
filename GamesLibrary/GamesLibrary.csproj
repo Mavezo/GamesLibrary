@@ -9,6 +9,14 @@
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="https://json.schemastore.org/appsettings.json" /></VisualStudio></ProjectExtensions>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\lib\select2\**" />
+    <Content Remove="wwwroot\lib\select2\**" />
+    <EmbeddedResource Remove="wwwroot\lib\select2\**" />
+    <None Remove="wwwroot\lib\select2\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.26" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.26" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.26" />
@@ -23,7 +31,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Views\GamesController\" />
     <Folder Include="Areas\Library\Controllers\" />
     <Folder Include="Areas\Library\Data\" />
     <Folder Include="Areas\Library\Models\" />

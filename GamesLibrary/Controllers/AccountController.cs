@@ -9,11 +9,11 @@ namespace GamesLibrary.Controllers
 {
 	public class AccountController : Controller
 	{
-		private readonly UserManager<Users> userManager;
-		private readonly SignInManager<Users> signInManager;
+		private readonly UserManager<User> userManager;
+		private readonly SignInManager<User> signInManager;
 		private readonly GamesLibraryContext libraryContext;
 
-		public AccountController(UserManager<Users> userManager, SignInManager<Users> signInManager, GamesLibraryContext libraryContext)
+		public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, GamesLibraryContext libraryContext)
 		{
 			this.userManager = userManager;
 			this.signInManager = signInManager;
@@ -32,7 +32,7 @@ namespace GamesLibrary.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				Users user = new Users() { UserName = vM.Nickname, Email = vM.Email };
+				User user = new User() { UserName = vM.Nickname, Email = vM.Email };
 				var result = await userManager.CreateAsync(user, vM.Password);
 				if (result.Succeeded)
 				{

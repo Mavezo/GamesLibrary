@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity;
 @model IdentityRole;
 
-<form method="post" asp-action="EditRole">
+<form method="post" asp-area="Admin" asp-action="EditRole">
 	<div asp-validation-summary="ModelOnly"></div>
 	<div>
 		<label asp-for="Name" class="mb-2"></label><br />
@@ -10,7 +10,7 @@
 	</div>
 	<div>
 		<input type="submit" asp-action="EditRole" value="Enter" class="btn btn-success mt-3" />
-		<form method="post" asp-action="DeleteRole">
+		<form method="post" asp-area="Admin" asp-action="DeleteRole">
 			<input type="submit" asp-action="DeleteRole" onclick="return confirm('Are you sure?')" asp-route-id="@Model.Id" value="Delete Role" class="btn btn-danger mt-3 ms-4" />
 		</form>
 	</div>

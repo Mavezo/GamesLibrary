@@ -1,0 +1,119 @@
+﻿@using GamesLibrary.Areas.Admin.Models.Games
+@using GamesLibrary.Data
+@model CreateViewModel
+
+@{
+	ViewData["Title"] = "Create";
+}
+<style>
+	i::before, i {
+		color: black;
+	}
+
+
+</style>
+
+
+<h1>Create</h1>
+
+<h4>Game</h4>
+<hr />
+<div class="row">
+	<div class="col-md-4">
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<label asp-for="Game.Name" class="control-label"></label>
+				<input asp-for="Game.Name" class="form-control" />
+				<span asp-validation-for="Game.Name" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Game.Description" class="control-label"></label>
+				<input asp-for="Game.Description" class="form-control" />
+				<span asp-validation-for="Game.Description" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Game.Price" class="control-label"></label>
+				<input asp-for="Game.Price" class="form-control" />
+				<span asp-validation-for="Game.Price" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Game.PosterImagePath" class="control-label"></label>
+				<input asp-for="Game.PosterImagePath" class="form-control" />
+				<span asp-validation-for="Game.PosterImagePath" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Game.ReleaseDate" class="control-label"></label>
+				<input type="date" asp-for="Game.ReleaseDate" class="form-control"></input>
+				<span asp-validation-for="Game.ReleaseDate" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Game.AverageRate" class="control-label"></label>
+				<input type="number" min="1" max="10" asp-for="Game.AverageRate" class="form-control" />
+				<span asp-validation-for="Game.AverageRate" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Game.RateCount" class="control-label"></label>
+				<input asp-for="Game.RateCount" class="form-control" />
+				<span asp-validation-for="Game.RateCount" class="text-danger"></span>
+			</div>
+
+			<div class="form-group my-3">
+				<label asp-for="Game.Genres" class="contol-label"></label>
+				@Html.ListBoxFor(m => m.GenreIds, Model.AllGenres, new { @class = "listbox", @multiple = "multiple" })
+			</div>
+
+			<div class="form-group">
+				<label class="mb-2" asp-for="ScreenshotLinks">Enter links to the screenshots</label><br />
+				<button type="button" class="btn btn-outline-success" onclick="newScreenField()">New field</button>
+				<button type="button" class="btn btn-outline-danger" onclick="removeScreenField()">Remove field</button>
+				<div class="links mt-3" id="screenLinks">
+					<input type="text" asp-for="ScreenshotLinks" class="screenshots" placeholder="link" />
+				</div>
+			</div>
+
+
+			<div class="form-group mt-4">
+				<input type="submit" value="Create" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<div>
+	<a asp-action="Index">Back to List</a>
+</div>
+
+
+@section Scripts
+{
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('.listbox').multiselect({
+				includeSelectAllOption: true,
+				templates: {
+					filter: '<div class="multiselect-filter d-flex align-items-center"><i class="bi bi-search text-muted"></i><input type="search" class="multiselect-search form-control" /></div>',
+					button: '<button type="button" class="multiselect dropdown-toggle" data-bs-toggle="dropdown"><span class="multiselect-selected-text"></span></button>'
+				},
+				enableFiltering: true,
+				enableCaseInsensitiveFiltering: true
+			})
+		});
+
+		function newScreenField() {
+			$("#screenLinks").append("<input type='text' class='screenshots' placeholder='link' data-val='true' data-val-required='The ScreenshotLinks field is required.' id='ScreenshotLinks' name='ScreenshotLinks' value=''>");
+		}
+
+		function removeScreenField() {
+			if ($("#screenLinks").children().length != 1) {
+				$("#screenLinks").children().last().remove();
+			}
+
+		}
+
+
+
+	</script>
+
+}
